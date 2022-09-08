@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView,RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView,CreateAPIView
 from main.models import *
-from serialazers import *
+from .serialazers import *
 
 # Info Api View
 class InfoListApiView(ListAPIView):
@@ -19,7 +19,7 @@ class LinkListApiView(ListAPIView):
     serializer_class = LinkSerializer
 
 # Contact Api View
-class ContactListApiView(ListAPIView):
+class ContactListApiView(CreateAPIView):
     queryset = ContactModel.objects.all()
     serializer_class = ContactSerializer
 
@@ -79,59 +79,12 @@ class ConsultingListApiView(ListAPIView):
     serializer_class = ConsultingSerializer
 
 # Appointment Api View
-class AppointmentListApiView(ListAPIView):
+class AppointmentListApiView(CreateAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
     serializer_class = ConsultingSerializer
 
 # Aboutus_blog Api View
 class Aboutus_blogListApiView(ListAPIView):
-    queryset = Aboutus_blog.objects.all()
+    queryset = Aboutus_block.objects.all()
     serializer_class = Aboutus_blogSerializer
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

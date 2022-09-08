@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class InfoModel(models.Model):
     # EMERGANCY
     emergancy = models.CharField(max_length=255)
@@ -59,28 +60,19 @@ class LinkModel(models.Model):
 
 # Contact Model   
 class ContactModel(models.Model):
-    phone_title = models.CharField(max_length=255)
     phone_text = models.TextField()
     phone_number = models.CharField(max_length=255)
 
-    def __str__ (self):
-        return self.phone_title
-    
     # Email
-    email_title = models.CharField(max_length=255)
     email_text = models.TextField()
     email = models.EmailField()
 
-    def __str__(self) :
-        return self.email_title
-
     # Location
-    location_title = models.CharField(max_length=255)
     location_text = models.TextField()
     location = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.location_title
+        return self.phone_number
         
 # About Us ichidegi FAQning tepasidegi Block
 
@@ -101,7 +93,7 @@ class Doctors(models.Model):
         verbose_name_plural = 'Doktorlar'
 
     def __str__(self):
-        return self.name + ' ' + self.specialty
+        return self.name 
 
 
 #  Operation Attented Model
@@ -186,7 +178,7 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
-
+# Our Service
 class OurService(models.Model):
     img = models.ImageField(upload_to='service/')
     banner_img = models.ImageField(upload_to='service/')
@@ -200,7 +192,7 @@ class OurService(models.Model):
         verbose_name_plural = 'Servislar'
 
     def __str__(self):
-        return self.title
+        return self.small_title
 
 
 class Introduction(models.Model):
@@ -236,7 +228,7 @@ class Appointment(models.Model):
         return self.department + ' ' + self.name
 
 
-class Aboutus_blog(models.Model):
+class Aboutus_block(models.Model):
     img = models.ImageField(upload_to='about_us_blog/')
     title = models.CharField(max_length=255)
     large_text = models.TextField()

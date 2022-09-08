@@ -100,7 +100,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
 # Aboutus_blog Serializer
 class Aboutus_blogSerializer(serializers.ModelSerializer):
       class Meta:
-        model = Aboutus_blog
+        model = Aboutus_block
         fields = '__all__'
 
 
