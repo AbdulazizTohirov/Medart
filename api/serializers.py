@@ -7,30 +7,7 @@ class Infoserializer(serializers.ModelSerializer):
         model = InfoModel
         fields ='__all__'
 
-# Our Services Serializer
-class OurServicesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OurServicesModel
-        fields = '__all__'
     
-# Link Serializer
-class LinkSerializer(serializers.ModelSerializer):
-      class Meta:
-        model = LinkModel
-        fields = '__all__'
-    
-# Contact Serializer
-class ContactSerializer(serializers.ModelSerializer):
-      class Meta:
-        model = ContactModel
-        fields = '__all__'
-
-# About Us Block  Serializer
-class AboutusNlockSerializer(serializers.ModelSerializer):
-      class Meta:
-        model = AboutusblockModel
-        fields = '__all__'
-
 # Doctors Serializer
 class DoctorsSerializer(serializers.ModelSerializer):
       class Meta:
@@ -40,13 +17,15 @@ class DoctorsSerializer(serializers.ModelSerializer):
 # Operationg Attented  Serializer
 class Operetion_Attented_Serializer(serializers.ModelSerializer):
       class Meta:
+        depth = 1
         model = Operationg_Attented
         fields = '__all__'
 
 # Doctors Detail Serializer
-class DoctorsDetailSerializer(serializers.ModelSerializer):
+class DoctorsAboutSerializer(serializers.ModelSerializer):
       class Meta:
-        model = Doctors_detail
+        depth = 1
+        model = Doctors_about
         fields = '__all__'
 
 # FAQ Serializer

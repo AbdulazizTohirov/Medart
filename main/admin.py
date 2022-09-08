@@ -2,13 +2,9 @@ from django.contrib import admin
 from .models import *
 
 admin.site.register(InfoModel)
-admin.site.register(OurServicesModel)
-admin.site.register(LinkModel)
-admin.site.register(ContactModel)
-admin.site.register(AboutusblockModel)
 admin.site.register(Doctors)
+admin.site.register(Doctors_about)
 admin.site.register(Operationg_Attented)
-admin.site.register(Doctors_detail)
 admin.site.register(FAQ)
 admin.site.register(Testimonials)
 admin.site.register(Blog)

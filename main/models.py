@@ -3,86 +3,48 @@ from django.db import models
 
 class InfoModel(models.Model):
     # EMERGANCY
-    emergancy = models.CharField(max_length=255)
-    emergency_number = models.CharField(max_length=255)
+    emergency_number = models.IntegerField
+    contact_number = models.IntegerField
 
     # Logo model
     logo = models.ImageField(upload_to='logo/')
 
     # WORKING HOURS
-    working_hours = models.CharField(max_length=255)
-    start_time = models.TimeField()
-    finish_time = models.TimeField()
+    working_days = models.CharField(max_length=255)
+    working_time = models.CharField(max_length=255)
+    weekend_days = models.CharField(max_length=255, null=True, blank=True)
+    weekend_time = models.CharField(max_length=255, null=True, blank=True)
 
     # Locations
     location = models.CharField(max_length=300)
-    
-    # Emergency Service
-    emergency_service = models.CharField(max_length=255)
-    text = models.TextField(blank=True,null=True)
-    number = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
 
-    # Opening hours
-    opening_hours = models.CharField(max_length=255)
-    opening_text = models.TextField(blank=True, null=True)
-    working_days = models.CharField(max_length=255)
-    working_start_time = models.CharField(max_length=255)
-    working_finish_time = models.CharField(max_length=255)
-    
-    # Weekand
-    weekand_day = models.CharField(max_length=255)
-    start_time = models.CharField(max_length=255,blank=True,null=True)
-    finish_time = models.CharField(max_length=255,blank=True,null=True)
-
-    def __str__(self):
-        return self.emergancy
-
-# Our Services Model
-class OurServicesModel(models.Model):
-    img = models.ImageField(upload_to='services/')
-    services_title = models.CharField(max_length=255)
-    services_text = models.TextField(blank=True,null=True)
-
-    def __str__(self):
-        return self.services_title
-
-# Telegram Instagram Link Model
-class LinkModel(models.Model):
-    # Telegram
-    telegram_title = models.CharField(max_length=255)
+    # Links 
     telegram_link=models.CharField(max_length=300)
-    # Instagram
-    instagram_title=models.CharField(max_length=255)
     instagram_link=models.CharField(max_length=300)
-
-    def __str__(self):
-        return self.telegram_title
-
-# Contact Model   
-class ContactModel(models.Model):
-    phone_text = models.TextField()
-    phone_number = models.CharField(max_length=255)
-
-    # Email
-    email_text = models.TextField()
     email = models.EmailField()
 
-    # Location
-    location_text = models.TextField()
-    location = models.CharField(max_length=255)
 
-    def __str__(self):
-        return self.phone_number
+# Our Services Model
+# class OurServicesModel(models.Model):
+#     img = models.ImageField(upload_to='services/')
+#     services_title = models.CharField(max_length=255)
+#     services_text = models.TextField(blank=True,null=True)
+
+#     def __str__(self):
+#         return self.services_title
+
+
         
 # About Us ichidegi FAQning tepasidegi Block
 
-class AboutusblockModel(models.Model):
-    block_img = models.ImageField(upload_to='aboutus_blog/')
-    block_title = models.CharField(max_length=255)
-    block_text = models.TextField()
+# class AboutusblockModel(models.Model):
+#     block_img = models.ImageField(upload_to='aboutus_blog/')
+#     block_title = models.CharField(max_length=255)
+#     block_text = models.TextField()
 
-    def __str__(self):
-        return self.block_title
+#     def __str__(self):
+#         return self.block_title
 
 # Doctors Model
 class Doctors(models.Model):
@@ -93,7 +55,7 @@ class Doctors(models.Model):
         verbose_name_plural = 'Doktorlar'
 
     def __str__(self):
-        return self.name 
+        return self.name + ' ' + self.specialty
 
 
 #  Operation Attented Model
@@ -112,7 +74,7 @@ class Operationg_Attented(models.Model):
         return self.title
 
 # Doctors detail Model
-class Doctors_detail(models.Model):
+class Doctors_about(models.Model):
     doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE)
     biography = models.TextField(null=True, blank=True)
     education = models.TextField(null=True, blank=True)
@@ -120,7 +82,7 @@ class Doctors_detail(models.Model):
     operations = models.ManyToManyField(Operationg_Attented)
 
     def __str__(self):
-        return self.doctor
+        return self.doctor.name
 
 # FAQ Model
 class FAQ(models.Model):
@@ -220,7 +182,7 @@ class Appointment(models.Model):
     department = models.CharField(max_length=255)
     doctor = models.ForeignKey(Doctors, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     number = models.CharField(max_length=255)
     date = models.DateField()
 

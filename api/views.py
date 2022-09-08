@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView,CreateAPIView
+from rest_framework.generics import ListAPIView,CreateAPIView,RetrieveAPIView
 from main.models import *
-from .serialazers import *
-
+from .serializers import *
+from rest_framework.response import Response
 # Info Api View
 class InfoListApiView(ListAPIView):
     queryset = InfoModel.objects.all()
@@ -13,20 +13,6 @@ class OurServicesListApiView(ListAPIView):
     queryset = OurService.objects.all()
     serializer_class = OurServiceSerializer
 
-# Link Api View
-class LinkListApiView(ListAPIView):
-    queryset = LinkModel.objects.all()
-    serializer_class = LinkSerializer
-
-# Contact Api View
-class ContactListApiView(CreateAPIView):
-    queryset = ContactModel.objects.all()
-    serializer_class = ContactSerializer
-
-# About Us Block Api View
-class AboutusblockListApiView(ListAPIView):
-    queryset = AboutusblockModel.objects.all()
-    serializer_class = Aboutus_blogSerializer
 
 # Doctors Api View
 class DoctorsListApiView(ListAPIView):
@@ -39,14 +25,19 @@ class OperationgAttentedsListApiView(ListAPIView):
     serializer_class = Operetion_Attented_Serializer
 
 # Doctors Detail Api View
-class DoctorsDetailListApiView(ListAPIView):
-    queryset = Doctors_detail.objects.all()
-    serializer_class = DoctorsDetailSerializer
+class DoctorsAboutListApiView(ListAPIView):
+    queryset = Doctors_about.objects.all()
+    serializer_class = DoctorsAboutSerializer
 
 # FAQ Api View
-class FAQListpiView(ListAPIView):
+class FAQListpiView(RetrieveAPIView):
     queryset = FAQ.objects.all()
     serializer_class = FAQSerializer
+
+    def get(self, request, pk):
+        query = FAQ.objects.filter(status=pk)
+        ser = self.serializer_class(query, many=True)
+        return Response(ser.data)
 
 # Testimonials Api View
 class TestimonialsListApiView(ListAPIView):
@@ -63,10 +54,6 @@ class NewsListApiView(ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
 
-# OurService Api View
-class OurServiceListApiView(ListAPIView):
-    queryset = OurService.objects.all()
-    serializer_class = OurServicesSerializer
 
 # Introduction Api View
 class IntroductionListApiView(ListAPIView):
@@ -82,7 +69,6 @@ class ConsultingListApiView(ListAPIView):
 class AppointmentListApiView(CreateAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-    serializer_class = ConsultingSerializer
 
 # Aboutus_blog Api View
 class Aboutus_blogListApiView(ListAPIView):
