@@ -1,18 +1,10 @@
-from django.shortcuts import render
 from .models import *
-from django.views.generic import ListView
+from rest_framework.generics import ListAPIView
+from api.serializers import *
 
-def info_list_view(ListView):
-    info = InfoModel
-    template_name = 'index.html' 
 
-def our_block(request):
-    blogs = Blog.objects.all().order_by('-id')[:8]
-    return render(request,'ourblog.html')
 
-def about_us_blog(request):
-    blogs = Aboutus_block.objects.all().order_by('-id')[:4]
-    return render(request,'about-us.html')
+class NewsView(ListAPIView):
+    queryset = News.objects.all().order_by('-id')
+    serializer_class = NewsSerializer
 
-def testimonial_view(reques):
-    testimonials = Testimonials.objects.all().order_by('id')[:5]

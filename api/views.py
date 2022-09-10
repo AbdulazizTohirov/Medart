@@ -1,26 +1,27 @@
 from django.shortcuts import render
+from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView,CreateAPIView,RetrieveAPIView
 from main.models import *
 from .serializers import *
 from rest_framework.response import Response
 # Info Api View
-class InfoListApiView(ListAPIView):
+class InfoView(ListAPIView):
     queryset = InfoModel.objects.all()
     serializer_class = Infoserializer
 
 # Our Services Api View
-class OurServicesListApiView(ListAPIView):
-    queryset = OurService.objects.all()
+class OurServiseView(ListAPIView):
+    queryset = OurService.objects.filter(banner=True).order_by('-id')
     serializer_class = OurServiceSerializer
 
 
 # Doctors Api View
-class DoctorsListApiView(ListAPIView):
+class DoctorsView(ListAPIView):
     queryset = Doctors.objects.all()
     serializer_class = DoctorsSerializer
 
 # Operationg Attented Api View
-class OperationgAttentedsListApiView(ListAPIView):
+class OperationgAttentedsView(ListAPIView):
     queryset = Operationg_Attented.objects.all()
     serializer_class = Operetion_Attented_Serializer
 
@@ -28,6 +29,16 @@ class OperationgAttentedsListApiView(ListAPIView):
 class OperationgAttentedsRetriveApiView(RetrieveAPIView):
     queryset = Operationg_Attented.objects.all()
     serializer_class = Operetion_Attented_Serializer
+
+# Doctors Count 
+@api_view(['GET'])
+def doctors_count(request):
+    doctors_quantity = Doctors.objects.all().count()
+    data = {
+        'success':True,
+        'qunatity_doctor':doctors_quantity
+    }
+    return Response(data)
 
 # Doctors About Api View
 class DoctorsAboutListApiView(ListAPIView):
@@ -40,34 +51,45 @@ class DoctorsAboutRetriveApiView(RetrieveAPIView):
     serializer_class = DoctorsAboutSerializer
 
 # FAQ Api View
-class FAQListpiView(RetrieveAPIView):
+class FAQListpiView(ListAPIView):
     queryset = FAQ.objects.all()
     serializer_class = FAQSerializer
-
+    
     def get(self, request, pk):
         query = FAQ.objects.filter(status=pk)
-        ser = self.serializer_class(query, many=True)
-        return Response(ser.data)
+        return Response(FAQSerializer(query, many=True).data) 
 
 # Testimonials Api View
-class TestimonialsListApiView(ListAPIView):
-    queryset = Testimonials.objects.all()
+class TestimonialsView(ListAPIView):
+    queryset = Testimonials.objects.all().order_by('id')[:5]
     serializer_class = TestimonialsSerializer
 
 # Blog Api View
-class BlogListApiView(ListAPIView):
-    queryset = Blog.objects.all()
-    serializer_class = BlogSerializer
+class OurBlog(ListAPIView):
+    blogs = Blog.objects.all().order_by('-id')[:8]
+    serializer = BlogSerializer(blogs, many=True)
 
-# News Api View
-class NewsListApiView(ListAPIView):
+#  News Api view 1
+# class NewsApiView(RetrieveAPIView):
+#     def
+# News Api View 2
+class NewsView(ListAPIView):
+    queryset = News.objects.all().order_by('-id')
+    serializer_class = NewsSerializer
+
+# New
+class NewaListView(ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
 
+    def get(self, request, pk):
+        query = News.objects.filter(status=pk)
+        return Response(NewsSerializer(query, many=True).data)
+
 
 # Introduction Api View
-class IntroductionListApiView(ListAPIView):
-    queryset = Introduction.objects.all()
+class IntroductionView(ListAPIView):
+    queryset = Introduction.objects.all().order_by('-id')
     serializer_class = IntroductionSerializer
 
 # Consulting Api View
@@ -81,6 +103,6 @@ class AppointmentListApiView(CreateAPIView):
     serializer_class = AppointmentSerializer
 
 # Aboutus_blog Api View
-class Aboutus_blogListApiView(ListAPIView):
-    queryset = Aboutus_block.objects.all()
+class Aboutus_blogView(ListAPIView):
+    queryset = Aboutus_block.objects.all().order_by('-id')[:4]
     serializer_class = Aboutus_blogSerializer

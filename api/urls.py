@@ -1,17 +1,18 @@
 from django.urls import path
 from .views import *
+from main.views import *
 urlpatterns = [
     # Info Urls
-    path('info/', InfoListApiView.as_view()),
+    path('info/', InfoView.as_view()),
 
     # Our Services Url
-    path('ourservices/', OurServicesListApiView.as_view()),
-
+    path('ourservices/', OurServiseView.as_view()),
+    path('doctors/count/', doctors_count),
      # Doctors Url
-    path('doctors/', DoctorsListApiView.as_view()),
+    path('doctors/', DoctorsView.as_view()),
 
      # Operationg Attenteds Url
-    path('operation/attenteds/', OperationgAttentedsListApiView.as_view()),
+    path('operation/attenteds/', OperationgAttentedsView.as_view()),
     path('operation/detail/<int:pk>/', OperationgAttentedsRetriveApiView.as_view()),
 
      # Doctors Detail Url
@@ -19,19 +20,20 @@ urlpatterns = [
     path('doctors/detail/<int:pk>/', DoctorsAboutRetriveApiView.as_view()),
 
      # FAQ Url
-    path('faq/<int:pk>/', FAQListpiView.as_view()),
+    path('faq/<int:pk>/', FAQListpiView .as_view()),
 
      # Testimonials Url
-    path('testimonial/',TestimonialsListApiView.as_view()),
+    path('testimonial/',TestimonialsView.as_view()),
 
      # BlogList Url
-    path('blog/',BlogListApiView.as_view()),
+    path('blog/',OurBlog.as_view()),
 
      # News Url
-    path('news/',NewsListApiView.as_view()),
+    path('news/',NewsView.as_view()),
+    path('news/<int:pk>/',NewaListView.as_view()),
 
      # Introduction Url
-    path('introduction/',IntroductionListApiView.as_view()),
+    path('introduction/',IntroductionView.as_view()),
 
      # Consulting Url
     path('consulting/',ConsultingListApiView.as_view()),
@@ -40,5 +42,5 @@ urlpatterns = [
     path('appointment/',AppointmentListApiView.as_view()),
 
      # Aboutus_blog Url
-    path('about-us-blog/',Aboutus_blogListApiView.as_view()),
+    path('about-us-blog/',Aboutus_blogView.as_view()),
 ]
