@@ -12,9 +12,11 @@ urlpatterns = [
 
      # Operationg Attenteds Url
     path('operation/attenteds/', OperationgAttentedsListApiView.as_view()),
+    path('operation/detail/<int:pk>/', OperationgAttentedsRetriveApiView.as_view()),
 
      # Doctors Detail Url
-    path('doctors/detail/', DoctorsAboutListApiView.as_view()),
+    path('doctors/about/', DoctorsAboutListApiView.as_view()),
+    path('doctors/detail/<int:pk>/', DoctorsAboutRetriveApiView.as_view()),
 
      # FAQ Url
     path('faq/<int:pk>/', FAQListpiView.as_view()),

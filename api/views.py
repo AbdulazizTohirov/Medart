@@ -24,8 +24,18 @@ class OperationgAttentedsListApiView(ListAPIView):
     queryset = Operationg_Attented.objects.all()
     serializer_class = Operetion_Attented_Serializer
 
-# Doctors Detail Api View
+# Operationg Attented RetriveApi View
+class OperationgAttentedsRetriveApiView(RetrieveAPIView):
+    queryset = Operationg_Attented.objects.all()
+    serializer_class = Operetion_Attented_Serializer
+
+# Doctors About Api View
 class DoctorsAboutListApiView(ListAPIView):
+    queryset = Doctors_about.objects.all()
+    serializer_class = DoctorsAboutSerializer
+
+# Doctors About Api View
+class DoctorsAboutRetriveApiView(RetrieveAPIView):
     queryset = Doctors_about.objects.all()
     serializer_class = DoctorsAboutSerializer
 
