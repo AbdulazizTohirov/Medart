@@ -1,76 +1,160 @@
-from django.shortcuts import render
-from rest_framework.generics import ListAPIView,CreateAPIView,RetrieveAPIView
-from main.models import *
 from .serializers import *
+from rest_framework import status
 from rest_framework.response import Response
-# Info Api View
-class InfoListApiView(ListAPIView):
-    queryset = InfoModel.objects.all()
-    serializer_class = Infoserializer
-
-# Our Services Api View
-class OurServicesListApiView(ListAPIView):
-    queryset = OurService.objects.all()
-    serializer_class = OurServiceSerializer
+from rest_framework.decorators import api_view
+from rest_framework.generics import ListAPIView, CreateAPIView
 
 
-# Doctors Api View
-class DoctorsListApiView(ListAPIView):
-    queryset = Doctors.objects.all()
-    serializer_class = DoctorsSerializer
+class InfoView(ListAPIView):
+    def get(self, request):
+        queryset_count = InfoModel.objects.all().count()
+        if queryset_count > 0:
+            queryset = InfoModel.objects.last()
+            serializer = Infoserializer(queryset)
+            return Response(serializer.data)
+        else:
+            data = {
+                'success': True,
+            }
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
 
-# Operationg Attented Api View
-class OperationgAttentedsListApiView(ListAPIView):
-    queryset = Operationg_Attented.objects.all()
-    serializer_class = Operetion_Attented_Serializer
 
-# Doctors Detail Api View
-class DoctorsAboutListApiView(ListAPIView):
-    queryset = Doctors_about.objects.all()
-    serializer_class = DoctorsAboutSerializer
+class OurServicesView(ListAPIView):
+    def get(self, request):
+        query_count = OurService.objects.all().count()
+        if query_count > 0:
+            queryset = OurService.objects.all()
+            serializer = OurServiceSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            data = {
+                'success': True,
+            }
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
 
-# FAQ Api View
-class FAQListpiView(RetrieveAPIView):
-    queryset = FAQ.objects.all()
-    serializer_class = FAQSerializer
 
-    def get(self, request, pk):
-        query = FAQ.objects.filter(status=pk)
-        ser = self.serializer_class(query, many=True)
-        return Response(ser.data)
 
-# Testimonials Api View
-class TestimonialsListApiView(ListAPIView):
-    queryset = Testimonials.objects.all()
+@api_view(['GET'])
+def DoctorsCountView(request):
+    doctors_quantity = Doctors.objects.all().count()
+    data = {
+        'success': True,
+        'doctors_quantity': doctors_quantity
+    }
+    return Response(data)
+
+
+class DoctorsView(ListAPIView):
+    def get(self, request):
+        queryset_count = Doctors.objects.all().count()
+        if queryset_count > 0:
+            queryset = Doctors.objects.all()
+            return Response(DoctorsSerializer(queryset, many=True).data)
+        else:
+            data = {
+                'success': True,
+            }
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+
+
+class DoctorsDetailView(ListAPIView):
+    def get(self, request, doctor=None):
+        queryset_count = Doctors.objects.all().count()
+        if queryset_count > 0:
+            query = Doctors_about.objects.filter(doctor_id=doctor)
+            ser = DoctorsAboutSerializer(query, many=True)
+            data = {
+                'success': True,
+                'queryset': ser.data,
+            }
+        else:
+            data = {
+                'success': True,
+                'page': 'Not Found',
+            }
+        return Response(data, status=status.HTTP_404_NOT_FOUND)
+
+
+class FAQView(ListAPIView):
+    def get(self, request, faq=None):
+        if faq == 1:
+            query = FAQ.objects.filter(status=1)
+            ser = FAQSerializer(query, many=True)
+            data = {
+                'success': True,
+                'queryset': ser.data
+            }
+        elif faq == 2:
+            query = FAQ.objects.filter(status=2)
+            ser = FAQSerializer(query, many=True)
+            data = {
+                'success': True,
+                'queryset': ser.data
+            }
+        elif faq == 3:
+            query = FAQ.objects.filter(status=3)
+            ser = FAQSerializer(query, many=True)
+            data = {
+                'success': True,
+                'queryset': ser.data
+            }
+        else:
+            data = {
+                'success': True,
+                'page': 'Not Found'
+            }
+        return Response(data, status=status.HTTP_404_NOT_FOUND)
+
+
+class TestimonialsView(ListAPIView):
+    queryset = Testimonials.objects.all().order_by('-id')[:5]
     serializer_class = TestimonialsSerializer
 
-# Blog Api View
-class BlogListApiView(ListAPIView):
-    queryset = Blog.objects.all()
+
+class BlogView(ListAPIView):
+    queryset = Blog.objects.all().order_by('-id')
     serializer_class = BlogSerializer
 
-# News Api View
-class NewsListApiView(ListAPIView):
-    queryset = News.objects.all()
+
+class NewsView(ListAPIView):
+    queryset = News.objects.all().order_by('-id')
     serializer_class = NewsSerializer
 
 
-# Introduction Api View
-class IntroductionListApiView(ListAPIView):
-    queryset = Introduction.objects.all()
-    serializer_class = IntroductionSerializer
+class NewsFilterView(ListAPIView):
+    def get(self, request, news=None):
+        if news == 1:
+            query = News.objects.filter(status=1)
+            ser = NewsSerializer(query, many=True)
+            data = {
+                'success': True,
+                'queryset': ser.data,
+            }
+        elif news == 2:
+            query = News.objects.filter(status=2)
+            ser = NewsSerializer(query, many=True)
+            data = {
+                'success': True,
+                'queryset': ser.data,
+            }
+        else:
+            data = {
+                'success': True,
+                'page': 'Not Found'
+            }
+        return Response(data, status=status.HTTP_404_NOT_FOUND)
 
-# Consulting Api View
-class ConsultingListApiView(ListAPIView):
+
+class ConsultingView(CreateAPIView):
     queryset = Consulting.objects.all()
     serializer_class = ConsultingSerializer
 
-# Appointment Api View
-class AppointmentListApiView(CreateAPIView):
+
+class AppointmentView(CreateAPIView):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
 
-# Aboutus_blog Api View
-class Aboutus_blogListApiView(ListAPIView):
-    queryset = Aboutus_block.objects.all()
+
+class Aboutus_blogView(ListAPIView):
+    queryset = Aboutus_blog.objects.all().order_by('-id')
     serializer_class = Aboutus_blogSerializer

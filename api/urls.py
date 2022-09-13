@@ -1,42 +1,23 @@
 from django.urls import path
 from .views import *
+
 urlpatterns = [
-    # Info Urls
-    path('info/', InfoListApiView.as_view()),
+    path('info/', InfoView.as_view()),
+    path('ourservices/', OurServicesView.as_view()),
+    path('doctors/', DoctorsView.as_view()),
+    path('doctors/count/', DoctorsCountView),
+    path('doctors/detail/<int:doctor>/', DoctorsDetailView.as_view()),
+    path('faq/<int:faq>/', FAQView.as_view()),
+    path('testimonial/', TestimonialsView.as_view()),
+    path('blog/', BlogView.as_view()),
+    path('news/', NewsView.as_view()),
+    path('news/filter/<int:news>/', NewsFilterView.as_view()),
+    path('consulting/', ConsultingView.as_view()),
+    path('appointment/', AppointmentView.as_view()),
+    path('aboutusblog/', Aboutus_blogView.as_view()),
 
-    # Our Services Url
-    path('ourservices/', OurServicesListApiView.as_view()),
+    # path('ourservices/filter_banner/', OurServicesFilterBannerView.as_view()),
+    # path('blog/detail/<int:detail>/', BlogDetailView.as_view()),
+    # path('introduction/', IntroductionView.as_view()),
 
-     # Doctors Url
-    path('doctors/', DoctorsListApiView.as_view()),
-
-     # Operationg Attenteds Url
-    path('operation/attenteds/', OperationgAttentedsListApiView.as_view()),
-
-     # Doctors Detail Url
-    path('doctors/detail/', DoctorsAboutListApiView.as_view()),
-
-     # FAQ Url
-    path('faq/<int:pk>/', FAQListpiView.as_view()),
-
-     # Testimonials Url
-    path('testimonial/',TestimonialsListApiView.as_view()),
-
-     # BlogList Url
-    path('blog/',BlogListApiView.as_view()),
-
-     # News Url
-    path('news/',NewsListApiView.as_view()),
-
-     # Introduction Url
-    path('introduction/',IntroductionListApiView.as_view()),
-
-     # Consulting Url
-    path('consulting/',ConsultingListApiView.as_view()),
-
-     # Appointment Url
-    path('appointment/',AppointmentListApiView.as_view()),
-
-     # Aboutus_blog Url
-    path('about-us-blog/',Aboutus_blogListApiView.as_view()),
 ]
