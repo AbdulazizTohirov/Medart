@@ -1,7 +1,10 @@
-from django.shortcuts import render
 from .models import *
-from django.views.generic import ListView
+from rest_framework.generics import ListAPIView
+from api.serializers import *
 
-def Info_List_view(ListView):
-    info = InfoModel
-    template_name = 'index.html' 
+
+
+class NewsView(ListAPIView):
+    queryset = News.objects.all().order_by('-id')
+    serializer_class = NewsSerializer
+
