@@ -119,7 +119,7 @@ class News(models.Model):
 
 class OurService(models.Model):
     img = models.ImageField(upload_to='service/')
-    banner_img = models.ImageField(upload_to='service/')
+    banner_img = models.ImageField(upload_to='service/', null=True, blank=True)
     small_title = models.CharField(max_length=255)
     large_title = models.CharField(max_length=255)
     text = models.CharField(max_length=255)
@@ -131,19 +131,6 @@ class OurService(models.Model):
 
     def __str__(self):
         return self.small_title
-
-
-# class Introduction(models.Model):
-#     title = models.CharField(max_length=255)
-#     video = models.FileField(upload_to='introduction/vid/')
-#     large_text = models.TextField()
-#     small_text = models.TextField()
-#
-#     class Meta:
-#         verbose_name_plural = 'Introduction'
-#
-#     def __str__(self):
-#         return self.title
 
 
 class Consulting(models.Model):

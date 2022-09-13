@@ -23,7 +23,7 @@ class OurServicesView(ListAPIView):
     def get(self, request):
         query_count = OurService.objects.all().count()
         if query_count > 0:
-            queryset = OurService.objects.all()
+            queryset = OurService.objects.all().order_by('-id')
             serializer = OurServiceSerializer(queryset, many=True)
             return Response(serializer.data)
         else:
