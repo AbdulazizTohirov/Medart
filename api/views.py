@@ -33,7 +33,6 @@ class OurServicesView(ListAPIView):
             return Response(data, status=status.HTTP_404_NOT_FOUND)
 
 
-
 @api_view(['GET'])
 def DoctorsCountView(request):
     doctors_quantity = Doctors.objects.all().count()

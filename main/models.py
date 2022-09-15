@@ -27,7 +27,8 @@ class InfoModel(models.Model):
 class Doctors(models.Model):
     name = models.CharField(max_length=255)
     specialty = models.CharField(max_length=255)
-    bio = models.TextField()
+    img = models.ImageField(upload_to='doctors/img/')
+    bio = models.CharField(max_length=300)
 
     class Meta:
         verbose_name_plural = 'Doktorlar'
